@@ -19,4 +19,21 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Sudoku1.txt">
+      <Filter>Fichiers de ressources</Filter>
+    </Text>
+    <Text Include="Sudoku2.txt">
+      <Filter>Fichiers de ressources</Filter>
+    </Text>
+    <Text Include="Sudoku3.txt">
+      <Filter>Fichiers de ressources</Filter>
+    </Text>
+    <Text Include="Sudoku4.txt">
+      <Filter>Fichiers de ressources</Filter>
+    </Text>
+    <Text Include="Sudoku5.txt">
+      <Filter>Fichiers de ressources</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

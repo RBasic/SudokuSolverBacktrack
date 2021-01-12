@@ -141,6 +141,13 @@
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Sudoku1.txt" />
+    <Text Include="Sudoku2.txt" />
+    <Text Include="Sudoku3.txt" />
+    <Text Include="Sudoku4.txt" />
+    <Text Include="Sudoku5.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

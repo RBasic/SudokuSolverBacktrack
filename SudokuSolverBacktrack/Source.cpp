@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <vector>
 
 using namespace std;
 
@@ -123,49 +125,69 @@ bool solver(int tab[9][9], const bool lock[9][9]) {
 	//si toutes les cases sont remplies => sudoku solved
 }
 
-int main() {
-	int grid[9][9] = {
-		{4,0,0,0,0,8,0,0,2},
-		{0,0,0,7,0,0,0,0,0},
-		{0,0,0,0,9,1,0,7,0},
-		{0,1,0,5,0,6,0,0,0},
-		{6,0,0,0,0,4,0,9,0},
-		{0,5,0,0,0,0,8,0,0},
-		{3,4,0,0,0,2,0,0,1},
-		{8,0,0,0,3,0,0,0,6},
-		{0,2,0,8,1,0,0,0,0}
-	};
-	int grid2[9][9] = {
-		{0,7,0,1,0,0,4,0,6},
-		{4,0,0,8,5,0,3,0,1},
-		{3,0,1,0,0,0,0,0,0},
-		{8,9,0,0,1,5,0,0,0},
-		{0,0,2,9,7,4,1,0,0},
-		{0,0,0,6,8,0,0,9,7},
-		{0,0,0,0,0,0,8,0,3},
-		{1,0,5,0,9,8,0,0,2},
-		{2,0,3,0,0,1,0,6,0}
-	};
-
-	int grid3[9][9] = {
-		{0,0,0,0,1,0,4,0,0},
-		{0,0,0,8,0,4,0,1,0},
-		{0,0,0,5,0,7,3,0,9},
-		{0,6,5,2,0,0,1,3,0},
-		{8,0,0,0,0,0,0,0,4},
-		{0,4,1,0,0,8,6,9,0},
-		{9,0,2,6,0,3,0,0,0},
-		{0,5,0,4,0,1,0,0,0},
-		{0,0,3,0,2,0,0,0,0}
-	};
-	bool lock[9][9] = { 0 };
-	for (int i = 0; i < 9; i++) {
-		for (int j = 0; j < 9; j++) {
-			lock[i][j] = (grid3[i][j] !=0);
+void formatContent(string filename) {
+	fstream file;
+	file.open(filename);
+	string str;
+	int i = 0, j = 0;
+	vector<string> content;
+	while (getline(file, str)) {
+		string temp = "";
+		for (int i = 0; i < str.size(); i++) {
+			if (isdigit(str[i])) {
+				temp += str[i];
+			}
+			else if (str[i] == '.') {
+				temp += '0';
+			}
+		}
+		content.push_back(temp);
+	}
+	file.close();
+	file.open(filename, ios::out|ios::trunc);
+	for (int i = 0; i < content.size(); i++) {
+		if (i == content.size() - 1) {
+			file << content[i];
+		}
+		else {
+			file << content[i] << endl;
 		}
 	}
-	if (solver(grid3,lock)) {
-		showGrid(grid3);
+	file.close();
+}
+
+void InitGrid(int tab[9][9],bool lock[9][9],string filename) {
+	fstream file;
+	file.open(filename);
+	string str;
+	int i = 0, j = 0;
+	while (getline(file, str)) {
+		for (char c : str) {
+			tab[i][j] = c - '0';
+			j++;
+		}
+		i++;
+		j = 0;
+	}
+	for (int i = 0; i < 9; i++) {
+		for (int j = 0; j < 9; j++) {
+			lock[i][j] = (tab[i][j] != 0);
+		}
+	}
+}
+
+
+int main() {
+	int grid[9][9];
+	bool lock[9][9] = { 0 };
+	string filename = "Sudoku5.txt";
+	formatContent(filename);
+	InitGrid(grid,lock,filename);
+	cout << "GRILLE ENTREE" << endl;
+	showGrid(grid);
+	cout << "GRILLE SORTIE" << endl;
+	if (solver(grid,lock)) {
+		showGrid(grid);
 	}
 	else {
 		cout << "marche pas";
